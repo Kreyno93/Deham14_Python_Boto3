@@ -51,8 +51,12 @@ else:
     print("You chose not to create a bucket")
 
 # Asks me if i want to list all buckets in a region
-list_buckets()
-
+response = input("Do you want to list all buckets in the region? (yes/no): ").strip().lower()
+if response in ['yes', 'y']:
+    list_buckets()
+else:
+    print("You chose not to list all buckets")
+    
 # Asks me if i want to delete a bucket. If yes, it deletes the bucket. If there are objects in the bucket, it asks if i want to delete them
 response = input("Do you want to delete a bucket? (yes/no): ").strip().lower()
 if response in ['yes', 'y']:
