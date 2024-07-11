@@ -1,78 +1,32 @@
-from s3 import create_bucket, list_buckets, delete_bucket, delete_all_objects
-from ec2 import create_instance, list_instances, terminate_instance
-from botocore.exceptions import ClientError
-
+from questions import ask_create_instance, ask_create_bucket
 
 # main.py
 
 def main():
-    # Asks the user if they want to create a bucket
-    response = input("Do you want to create a bucket? (yes/no): ").strip().lower()
-    if response in ["yes", "y"]:
-        bucket_name = input("Enter the bucket name you want to create: ").strip()
-        create_bucket(bucket_name)
+    # Welcome Message with a Selection of 1 to X for the user to choose
+    print("Welcome to the AWS CLI")
+    print("1. VPC")
+    print("2. EC2")
+    print("3. S3")
+    print("4. Exit")
+    # Ask the user to select an option
+    response = input("Enter the number of the option you want to choose: ").strip()
+    # If the user selects 1, import the vpc module and call the ask_create_vpc function
+    if response == "1":
+        print("Not yet implemented")
+    # If the user selects 2, import the ec2 module and call the ask_create_instance function
+    elif response == "2":
+        ask_create_instance()
+    # If the user selects 3, import the s3 module and call the ask_create_bucket function
+    elif response == "3":
+        ask_create_bucket()
+    # If the user selects 4, print a goodbye message
+    elif response == "4":
+        print("Goodbye")
+    # If the user selects anything else, print an error message
     else:
-        print("You chose not to create a bucket")
-
-    # Asks me if i want to list all buckets in a region
-    response = (
-        input("Do you want to list all buckets in the region? (yes/no): ")
-        .strip()
-        .lower()
-    )
-    if response in ["yes", "y"]:
-        list_buckets()
-    else:
-        print("You chose not to list all buckets")
-
-    # Asks me if i want to delete a bucket. If yes, it asks me for the bucket name
-    # If it fails due to the bucket not being empty, it asks me if i want to delete all objects in the bucket
-    response = input("Do you want to delete a bucket? (yes/no): ").strip().lower()
-    if response in ["yes", "y"]:
-        try:
-            bucket_name = input("Enter the bucket name you want to delete: ").strip()
-            delete_bucket(bucket_name)
-        except ClientError as e:
-            print(f"Error: {e}")
-            if "BucketNotEmpty" in str(e):
-                response = (
-                    input("Do you want to delete all objects in the bucket? (yes/no): ")
-                    .strip()
-                    .lower()
-                )
-                if response in ["yes", "y"]:
-                    delete_all_objects(bucket_name)
-                    response = (
-                        input("Do you want to delete the bucket now? (yes/no): ")
-                        .strip()
-                        .lower()
-                    )
-                    if response in ["yes", "y"]:
-                        delete_bucket(bucket_name)
-                else:
-                    print("You chose not to delete all objects in the bucket")
-    else:
-        print("You chose not to delete a bucket")
-
-    # Ask the user if they want to create an instance
-    response = input("Do you want to create an instance? (yes/no): ").strip().lower()
-
-    # If yes, ask the user to enter the instance name
-    if response in ["yes", "y"]:
-        user_input = input("Enter the instance name you want to create: ").strip()
-        create_instance(user_input)
-    else:
-        print("You chose not to create an instance")
-
-    # Ask the user if they want to terminate an instance
-    response = input("Do you want to terminate an instance? (yes/no): ").strip().lower()
-
-    # If yes, ask the user to list all instances name and id
-    if response in ["yes", "y"]:
-        list_instances()
-        instance_id = input("Enter the instance id you want to terminate: ").strip()
-        terminate_instance(instance_id)
-
+        print("Error: Invalid option selected. Please select a valid option")
+        main()
 
 if __name__ == "__main__":
     main()

@@ -7,7 +7,7 @@ ec2 = boto3.client('ec2')
 # Create a new instance function
 def create_instance(user_input):
     response = ec2.run_instances(
-        ImageId="ami-0f76a278bc3380848",
+        ImageId="ami-0f76a278bc3380848", # TODO hardcoded value needs to be changed
         InstanceType='t3.micro',
         MinCount=1,
         MaxCount=1,
@@ -16,8 +16,8 @@ def create_instance(user_input):
             {
                 'AssociatePublicIpAddress': True,
                 'DeviceIndex': 0,
-                'SubnetId': 'subnet-07e16952d8589584f',
-                'Groups': ['sg-07053caff48096429'],
+                'SubnetId': 'subnet-07e16952d8589584f', # TODO hardcoded value needs to be changed
+                'Groups': ['sg-07053caff48096429'], # TODO hardcoded value needs to be changed
             },
         ],
         TagSpecifications=[
