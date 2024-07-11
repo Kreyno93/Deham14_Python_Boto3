@@ -40,16 +40,6 @@ def create_instance(user_input):
     waiter.wait(InstanceIds=[instance_id])
     print('Instance is now running')
 
-# Ask the user if they want to create an instance
-response = input("Do you want to create an instance? (yes/no): ").strip().lower()
-
-# If yes, ask the user to enter the instance name
-if response in ['yes', 'y']:
-    user_input = input("Enter the instance name you want to create: ").strip()
-    create_instance(user_input)
-else:
-    print("You chose not to create an instance")
-
 # Create function that terminates an instance
 def terminate_instance(instance_id):
     try:
@@ -74,12 +64,5 @@ def list_instances():
                         break
             print(f'Instance Name: {instance_name}, Instance ID: {instance_id}, Status: {instance_state}')
 
-# Ask the user if they want to terminate an instance
-response = input("Do you want to terminate an instance? (yes/no): ").strip().lower()
 
-# If yes, ask the user to list all instances name and id
-if response in ['yes', 'y']:
-    list_instances()
-    instance_id = input("Enter the instance id you want to terminate: ").strip()
-    terminate_instance(instance_id)
 

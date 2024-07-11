@@ -54,41 +54,7 @@ def delete_all_objects(bucket_name):
     except ClientError as e:
         print(f'Error: {e}')
 
-# Asks the user if they want to create a bucket
-response = input("Do you want to create a bucket? (yes/no): ").strip().lower()
-if response in ['yes', 'y']:
-    bucket_name = input("Enter the bucket name you want to create: ").strip()
-    create_bucket(bucket_name)
-else:
-    print("You chose not to create a bucket")
 
-# Asks me if i want to list all buckets in a region
-response = input("Do you want to list all buckets in the region? (yes/no): ").strip().lower()
-if response in ['yes', 'y']:
-    list_buckets()
-else:
-    print("You chose not to list all buckets")
-
-# Asks me if i want to delete a bucket. If yes, it asks me for the bucket name
-# If it fails due to the bucket not being empty, it asks me if i want to delete all objects in the bucket
-response = input("Do you want to delete a bucket? (yes/no): ").strip().lower()
-if response in ['yes', 'y']:
-    try: 
-        bucket_name = input("Enter the bucket name you want to delete: ").strip()
-        delete_bucket(bucket_name)
-    except ClientError as e:
-        print(f'Error: {e}')
-        if "BucketNotEmpty" in str(e):
-            response = input("Do you want to delete all objects in the bucket? (yes/no): ").strip().lower()
-            if response in ['yes', 'y']:
-                delete_all_objects(bucket_name)
-                response = input("Do you want to delete the bucket now? (yes/no): ").strip().lower()
-                if response in ['yes', 'y']:
-                    delete_bucket(bucket_name)
-            else:
-                print("You chose not to delete all objects in the bucket")
-else:
-    print("You chose not to delete a bucket")
 
     
 
