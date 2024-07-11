@@ -5,7 +5,7 @@ from botocore.exceptions import ClientError
 ec2 = boto3.client('ec2')
 
 # Create a new instance function
-def create_instance(user_input):
+def create_instance(instance_name,subnet_id,sg_id):
     response = ec2.run_instances(
         ImageId="ami-0f76a278bc3380848", # TODO hardcoded value needs to be changed
         InstanceType='t3.micro',
@@ -16,8 +16,8 @@ def create_instance(user_input):
             {
                 'AssociatePublicIpAddress': True,
                 'DeviceIndex': 0,
-                'SubnetId': 'subnet-07e16952d8589584f', # TODO hardcoded value needs to be changed
-                'Groups': ['sg-07053caff48096429'], # TODO hardcoded value needs to be changed
+                'SubnetId': subnet_id, # TODO hardcoded value needs to be changed
+                'Groups': [sg_id], # TODO hardcoded value needs to be changed
             },
         ],
         TagSpecifications=[
@@ -26,7 +26,7 @@ def create_instance(user_input):
                 'Tags': [
                     {
                         'Key': 'Name',
-                        'Value': user_input
+                        'Value': instance_name
                     },
                 ]
             },
